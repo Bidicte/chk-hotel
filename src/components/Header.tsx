@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { User, LayoutGrid } from 'lucide-react';
 export default function Header() {
   return (
@@ -18,5 +19,13 @@ export default function Header() {
             </div>
           </div>
         </div>
+=======
+export default function Header() {
+  return (
+    <header className="bg-white shadow p-4 flex justify-between">
+      <div className="text-left text-2xl font-bold">Clients</div>
+      <div className="text-right text-sm text-gray-500">Bonjour, utilisateur</div>
+    </header>
+>>>>>>> 74a7d045625aa1f69cdd70db1d358c2261eef504
   );
 }

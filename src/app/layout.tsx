@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+<<<<<<< HEAD
 
 // export default function RootLayout({ children }: { children: React.ReactNode }) {
 //   return (
@@ -26,3 +27,21 @@ export default function LoginLayout({ children }: { children: React.ReactNode })
     </html>
   );
 }
+=======
+import Sidebar from "@/components/Sidebar";
+import Header from "@/components/Header";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="fr">
+      <body className="flex h-screen bg-gray-100">
+        <Sidebar />
+        <div className="flex-1 flex flex-col">
+          <Header />
+          <main className="p-6 overflow-y-auto">{children}</main>
+        </div>
+      </body>
+    </html>
+  );
+}
+>>>>>>> 74a7d045625aa1f69cdd70db1d358c2261eef504
