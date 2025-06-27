@@ -1,9 +1,44 @@
-<<<<<<< HEAD
+'use client'
+
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import {User, Lock, EyeOff} from "lucide-react";
 
 export default function LoginForm(){
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const router = useRouter()
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError('')
+
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      })
+
+      if (!res.ok) {
+        const err = await res.json()
+        setError(err.message)
+        return
+      }
+
+      const data = await res.json()
+      localStorage.setItem('token', data.token)
+
+      // Redirige vers dashboard
+      router.push('/dashboard')
+    } catch (err) {
+      setError('Erreur inattendue.')
+    }
+  }
+
     return (
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-6">
             {/* Email */}
             <div>
@@ -19,7 +54,8 @@ export default function LoginForm(){
                   name="name"
                   type="email"
                   required
-                  value=""
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
                   className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                   placeholder="Entrez votre email"
                 />
@@ -38,9 +74,10 @@ export default function LoginForm(){
                 <input
                   id="password"
                   name="password"
-                  type=""
+                  type="password"
                   required
-                  value=""
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
                   className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                   placeholder="Entrez votre mot de passe"
                 />
@@ -53,6 +90,7 @@ export default function LoginForm(){
                 </button>
               </div>
             </div>
+            {error && <p className="text-red-600 mb-4">{error}</p>}
 
             {/* Options */}
             <div className="flex items-center justify-between">
@@ -74,47 +112,11 @@ export default function LoginForm(){
 
             {/* Bouton de connexion */}
             <button
-=======
-export default function LoginForm(){
-    return (
-        <form className="space-y-4">
-          <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-              Username
-            </label>
-            <input
-              id="username"
-              type="text"
-              className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Mot de passe
-            </label>
-            <div className="relative">
-              <input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          </div>
-
-          <button
->>>>>>> 74a7d045625aa1f69cdd70db1d358c2261eef504
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md"
           >
             Connexion
           </button>
-<<<<<<< HEAD
-          
           </div>
-=======
->>>>>>> 74a7d045625aa1f69cdd70db1d358c2261eef504
         </form>
-    )
-}
+);}

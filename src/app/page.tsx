@@ -1,8 +1,15 @@
-export default function Home() {
-  return (
-    <div>
-      <h1 className="text-xl font-bold">Bienvenue sur le Dashboard</h1>
-      <p className="mt-2 text-gray-600">Résumé des indicateurs clés ici.</p>
-    </div>
-  );
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "./api/auth/[...nextauth]/route";
+
+export default async function HomePage() {
+  const session = await getServerSession(authOptions);
+
+  // Pas de session ? Redirection vers /login
+  if (!session) {
+    redirect("/login");
+  }
+
+  // Si connecté, rediriger vers /dashboard ou autre
+  redirect("/dashboard");
 }
